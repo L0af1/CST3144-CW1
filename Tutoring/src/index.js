@@ -11,8 +11,8 @@ const routes = [
   { path: '/', component: Home },
   { path: '/tutors', component: Tutors },
   { path: '/tutor/:id', component: TutorProfile, props: true },
-  { path: '/login', component: Login }, // soon ill add this, just need to write the code. (Pathing)
-  { path: '/signup', component: Signup }, // soon ill add this, just need to write the code. (Pathing)
+  { path: '/login', component: Login }, 
+  { path: '/signup', component: Signup },
   { path: '/cart', component: Cart },
 ]
 
