@@ -1,6 +1,5 @@
 import { reactive } from 'vue'
 
-
 export const bookingStore = reactive({
   bookedTutors: [],
   
