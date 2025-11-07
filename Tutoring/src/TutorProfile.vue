@@ -9,6 +9,8 @@
         <p><strong>Subject:</strong> {{ tutor.subject }}</p>
         <p><strong>Price:</strong> £{{ tutor.price }} per hour</p>
         <p><strong>Rating:</strong> ⭐ {{ tutor.rating }}</p>
+        <p><strong>Space:</strong>{{ tutor.space }}</p>
+        <p><strong>Location</strong>{{ tutor.location }}</p>
   
         <button @click="bookTutor" class="book-btn" :disabled="isBooked">
           {{ isBooked ? '✓ Already Booked' : 'Book Session' }}
@@ -31,12 +33,12 @@
   const tutorId = route.params.id
   
   const tutors = [
-    { id: 1, name: 'Lewis Johnson', subject: 'Math', price: 25, rating: 4.8, about: 'Mathematics major passionate about teaching problem solving.' },
-    { id: 2, name: 'Vinnie Hec', subject: 'English', price: 20, rating: 4.6, about: 'English literature graduate who loves creative writing.' },
-    { id: 3, name: 'Jude Richard', subject: 'Science', price: 30, rating: 4.9, about: 'Biochemist with 5 years of teaching experience.' },
-    { id: 4, name: 'Emma Watson', subject: 'History', price: 22, rating: 4.7, about: 'History teacher who brings the past to life.' },
-    { id: 5, name: 'Olivia Brown', subject: 'Art', price: 28, rating: 4.5, about: 'Fine arts graduate helping students express creativity.' },
-    { id: 6, name: 'Liam Smith', subject: 'AP Physics', price: 35, rating: 4.9, about: 'Physics expert passionate about STEM education.' }
+    { id: 1, name: 'Lewis Johnson', subject: 'Math', price: 25, rating: 4.8, location: Hendon, about: 'Mathematics major passionate about teaching problem solving.' },
+    { id: 2, name: 'Vinnie Hec', subject: 'English', price: 20, rating: 4.6, location: Rushden, about: 'English literature graduate who loves creative writing.' },
+    { id: 3, name: 'Jude Richard', subject: 'Science', price: 30, rating: 4.9, location: Hitchin, about: 'Biochemist with 5 years of teaching experience.' },
+    { id: 4, name: 'Emma Watson', subject: 'History', price: 22, rating: 4.7, location: Sandy , about: 'History teacher who brings the past to life.' },
+    { id: 5, name: 'Olivia Brown', subject: 'Art', price: 28, rating: 4.5, location: Biggleswade, about: 'Fine arts graduate helping students express creativity.' },
+    { id: 6, name: 'Liam Smith', subject: 'AP Physics', price: 35, rating: 4.9, location: Huntingdon, about: 'Physics expert passionate about STEM education.' }
   ]
   
   const tutor = tutors.find(t => t.id === Number(tutorId))

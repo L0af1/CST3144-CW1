@@ -4,6 +4,8 @@
       <p><strong>Subject:</strong> {{ tutor.subject }}</p>
       <p><strong>Rate:</strong> £{{ tutor.price }}/hr</p>
       <p><strong>⭐</strong> {{ tutor.rating }}</p>
+      <p><strong>Space</strong>{{ tutor.space }}</p>
+      <p><strong>Location: </strong>{{ tutor.location }}</p>
   
       <router-link
         :to="`/tutor/${tutor.id}`"

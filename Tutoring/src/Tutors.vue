@@ -67,12 +67,12 @@
   import TutorCard from './components/TutorCard.vue'
   
   const tutors = [
-    { id: 1, name: 'Lewis Johnson', subject: 'Math', price: 25, rating: 4.8 },
-    { id: 2, name: 'Vinnie Hec', subject: 'English', price: 20, rating: 4.6 },
-    { id: 3, name: 'Jude Richard', subject: 'Science', price: 30, rating: 4.9 },
-    { id: 4, name: 'Emma Watson', subject: 'History', price: 22, rating: 4.7 },
-    { id: 5, name: 'Olivia Brown', subject: 'Art', price: 28, rating: 4.5 },
-    { id: 6, name: 'Liam Smith', subject: 'AP Physics', price: 35, rating: 4.9 }
+    { id: 1, name: 'Lewis Johnson', subject: 'Math', price: 25, rating: 4.8 , location: 'Hendon'}, 
+    { id: 2, name: 'Vinnie Hec', subject: 'English', price: 20, rating: 4.6, location: 'Rushden' },
+    { id: 3, name: 'Jude Richard', subject: 'Science', price: 30, rating: 4.9, location: 'Hitchin' },
+    { id: 4, name: 'Emma Watson', subject: 'History', price: 22, rating: 4.7, location: 'Sandy' },
+    { id: 5, name: 'Olivia Brown', subject: 'Art', price: 28, rating: 4.5, location: 'Biggleswade' },
+    { id: 6, name: 'Liam Smith', subject: 'AP Physics', price: 35, rating: 4.9, location: 'Huntingdon' }
   ]
   
   const filters = ref({
