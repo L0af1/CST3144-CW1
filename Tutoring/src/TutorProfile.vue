@@ -24,38 +24,25 @@
   </template>
   
   <script setup>
-  import { computed } from 'vue'
-  import { useRoute, useRouter } from 'vue-router'
-  import { bookingStore } from './bookingStore'
-  
-  const router = useRouter()   
-  const route = useRoute()  
-  const tutorId = route.params.id
-  
-  const tutors = [
-    { id: 1, name: 'Lewis Johnson', subject: 'Math', price: 25, rating: 4.8, location: Hendon, about: 'Mathematics major passionate about teaching problem solving.' },
-    { id: 2, name: 'Vinnie Hec', subject: 'English', price: 20, rating: 4.6, location: Rushden, about: 'English literature graduate who loves creative writing.' },
-    { id: 3, name: 'Jude Richard', subject: 'Science', price: 30, rating: 4.9, location: Hitchin, about: 'Biochemist with 5 years of teaching experience.' },
-    { id: 4, name: 'Emma Watson', subject: 'History', price: 22, rating: 4.7, location: Sandy , about: 'History teacher who brings the past to life.' },
-    { id: 5, name: 'Olivia Brown', subject: 'Art', price: 28, rating: 4.5, location: Biggleswade, about: 'Fine arts graduate helping students express creativity.' },
-    { id: 6, name: 'Liam Smith', subject: 'AP Physics', price: 35, rating: 4.9, location: Huntingdon, about: 'Physics expert passionate about STEM education.' }
-  ]
-  
-  const tutor = tutors.find(t => t.id === Number(tutorId))
-  
-  
-  const isBooked = computed(() => {
-    return bookingStore.bookedTutors.some(t => t.id === tutor?.id)
-  })
-  
-  function bookTutor() {
-    if (tutor) {
-      bookingStore.addBooking(tutor)
-      alert(`${tutor.name} has been booked successfully!`)
-      router.push('/cart')
-    }
-  }
-  </script>
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { bookingStore } from './bookingStore'
+
+const router = useRouter()
+const route = useRoute()
+
+const tutorId = Number(route.params.id)
+const tutor = bookingStore.tutors.find(t => t.id === tutorId)
+
+const isBooked = computed(() => {
+  return bookingStore.bookedTutors.some(t => t.id === tutorId)
+})
+
+function bookTutor() {
+  bookingStore.addBooking(tutor)
+  router.push('/cart')
+}
+</script>
   
   <style scoped>
   .profile-page {
