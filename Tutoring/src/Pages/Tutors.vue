@@ -64,8 +64,8 @@
   
   <script setup>
 import { ref, computed } from 'vue'
-import TutorCard from './components/TutorCard.vue'
-import { bookingStore } from './bookingStore'
+import TutorCard from '../components/TutorCard.vue'
+import { bookingStore } from '../JS/bookingStore.js'
 
 const tutors = bookingStore.tutors
 

@@ -9,8 +9,8 @@
         <p><strong>Subject:</strong> {{ tutor.subject }}</p>
         <p><strong>Price:</strong> £{{ tutor.price }} per hour</p>
         <p><strong>Rating:</strong> ⭐ {{ tutor.rating }}</p>
-        <p><strong>Space:</strong>{{ tutor.space }}</p>
-        <p><strong>Location</strong>{{ tutor.location }}</p>
+        <p><strong>Space: </strong>{{ tutor.space }}</p>
+        <p><strong>Location: </strong>{{ tutor.location }}</p>
   
         <button @click="bookTutor" class="book-btn" :disabled="isBooked">
           {{ isBooked ? '✓ Already Booked' : 'Book Session' }}
@@ -26,7 +26,7 @@
   <script setup>
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { bookingStore } from './bookingStore'
+import { bookingStore } from '../JS/bookingStore.js'
 
 const router = useRouter()
 const route = useRoute()

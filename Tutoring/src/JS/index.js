@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Home from './Home.vue'
-import Tutors from './Tutors.vue'
-import TutorProfile from './TutorProfile.vue'
-import Login from './Login.vue' // soon ill add this, just need to write the cpde
-import Signup from './Signup.vue' // soon ill add this, just need to write the code
-import Cart from './Cart.vue'
+import Home from '../Pages/Home.vue'
+import Tutors from '../Pages/Tutors.vue'
+import TutorProfile from '../Pages/TutorProfile.vue'
+import Login from '../Extra/Login.vue'
+import Signup from '../Extra/Signup.vue'
+import Cart from '../Pages/Cart.vue'
 
 const routes = [
   { path: '/', component: Home },

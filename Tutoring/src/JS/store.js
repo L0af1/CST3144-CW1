@@ -4,7 +4,7 @@ export const store = reactive({
   cart: [],
 
   addToCart(tutor) {
-    // Prevent duplicates bc we dont like that
+    // this will prevent duplicates bc we dont like that
     if (!this.cart.find(item => item.id === tutor.id)) {
       this.cart.push(tutor)
     }

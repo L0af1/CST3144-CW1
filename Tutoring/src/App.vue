@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar">
-      <h2 class="logo">TutorConnect</h2>
+      <h2 class="logo">Tutor Connect</h2>
       <ul class ="nav-links">
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/tutors">Tutors</router-link></li>

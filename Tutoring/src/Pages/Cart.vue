@@ -51,7 +51,7 @@
   
   <script setup>
   import { reactive } from 'vue'
-  import { bookingStore } from './bookingStore.js' 
+ import { bookingStore } from '../JS/bookingStore.js'
   
   function formatDate(dateString) {
     return new Date(dateString).toLocaleDateString()
@@ -70,7 +70,6 @@
     phone: '',
     address: ''
   })
-  //TODO: integrate with backend later when i make the git repo
   
   function submitBooking() {
     if (!customer.name || !customer.email || !customer.phone || !customer.address) {
