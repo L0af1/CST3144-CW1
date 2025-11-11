@@ -37,6 +37,19 @@
             step="0.1"
           />
         </div>
+
+        <div class ='filter-group'>
+          <lablel>Location</lablel>
+          <select v-model="filters.location">
+            <option value="">All Locations</option>
+            <option value="Hendon">Hendon</option>
+            <option value="Rushden">Rushden</option>
+            <option value="Hitchin">Hitchin</option>
+            <option value="Sandy">Sandy</option>
+            <option value="Biggleswade">Biggleswade</option>
+            <option value="Huntingdon">Huntingdon</option>
+            </select>
+        </div>
   
         <button @click="resetFilters" class="reset-btn">Reset Filters</button>
       </div>
@@ -72,7 +85,8 @@ const tutors = bookingStore.tutors
 const filters = ref({
   subject: '',
   maxPrice: 50,
-  minRating: 0
+  minRating: 0,
+  location: ''
 })
 
 const filteredTutors = computed(() => {
@@ -80,7 +94,9 @@ const filteredTutors = computed(() => {
     const matchesSubject = !filters.value.subject || tutor.subject === filters.value.subject
     const matchesPrice = tutor.price <= filters.value.maxPrice
     const matchesRating = tutor.rating >= filters.value.minRating
-    return matchesSubject && matchesPrice && matchesRating
+    const matchesLocation = !filters.value.location || tutor.location === filters.value.location
+    return matchesSubject && matchesPrice && matchesRating && matchesLocation
+    
   })
 })
 
@@ -88,7 +104,8 @@ function resetFilters() {
   filters.value = {
     subject: '',
     maxPrice: 50,
-    minRating: 0
+    minRating: 0,
+    location: ''
   }
 }
 </script>
