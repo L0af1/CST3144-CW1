@@ -76,39 +76,50 @@
   </template>
   
   <script setup>
-import { ref, computed } from 'vue'
-import TutorCard from '../components/TutorCard.vue'
-import { bookingStore } from '../JS/bookingStore.js'
-
-const tutors = bookingStore.tutors
-
-const filters = ref({
-  subject: '',
-  maxPrice: 50,
-  minRating: 0,
-  location: ''
-})
-
-const filteredTutors = computed(() => {
-  return tutors.filter(tutor => {
-    const matchesSubject = !filters.value.subject || tutor.subject === filters.value.subject
-    const matchesPrice = tutor.price <= filters.value.maxPrice
-    const matchesRating = tutor.rating >= filters.value.minRating
-    const matchesLocation = !filters.value.location || tutor.location === filters.value.location
-    return matchesSubject && matchesPrice && matchesRating && matchesLocation
-    
-  })
-})
-
-function resetFilters() {
-  filters.value = {
+  import { ref, computed, onMounted } from 'vue'
+  import TutorCard from '../components/TutorCard.vue'
+  import { bookingStore } from '../JS/bookingStore.js'
+  
+  const tutors = computed(() => bookingStore.tutors)
+  
+  const filters = ref({
     subject: '',
     maxPrice: 50,
     minRating: 0,
     location: ''
+  })
+  
+  onMounted(async () => {
+    try {
+      const res = await fetch('https://cst3144-cw1-backend.onrender.com/api/lessons')
+      const data = await res.json()
+  
+      bookingStore.tutors.splice(0, bookingStore.tutors.length, ...data)
+    } catch (err) {
+      console.error('FETCH ERROR:', err)
+    }
+  })
+  
+  const filteredTutors = computed(() => {
+    return tutors.value.filter(tutor => {
+      const matchesSubject = !filters.value.subject || tutor.subject === filters.value.subject
+      const matchesPrice = tutor.price <= filters.value.maxPrice
+      const matchesRating = tutor.rating >= filters.value.minRating
+      const matchesLocation = !filters.value.location || tutor.location === filters.value.location
+      return matchesSubject && matchesPrice && matchesRating && matchesLocation
+    })
+  })
+  
+  function resetFilters() {
+    filters.value = {
+      subject: '',
+      maxPrice: 50,
+      minRating: 0,
+      location: ''
+    }
   }
-}
-</script>
+  </script>
+  
 
   
   <style scoped>

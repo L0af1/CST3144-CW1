@@ -50,42 +50,71 @@
   </template>
   
   <script setup>
-  import { reactive } from 'vue'
- import { bookingStore } from '../JS/bookingStore.js'
+  import { reactive } from "vue"
+  import { bookingStore } from "../JS/bookingStore.js"
   
   function formatDate(dateString) {
     return new Date(dateString).toLocaleDateString()
   }
   
   function cancelBooking(tutorId) {
-    if (confirm('Are you sure you want to cancel this booking?')) {
+    if (confirm("Are you sure you want to cancel this booking?")) {
       bookingStore.removeBooking(tutorId)
     }
   }
   
-  
   const customer = reactive({
-    name: '',
-    email: '',
-    phone: '',
-    address: ''
+    name: "",
+    email: "",
+    phone: "",
+    address: ""
   })
   
-  function submitBooking() {
+  async function submitBooking() {
     if (!customer.name || !customer.email || !customer.phone || !customer.address) {
-      alert('Please fill out all fields before submitting.')
+      alert("Please fill out all fields before submitting.")
       return
     }
   
-    alert(`Booking confirmed!\n\nName: ${customer.name}\nEmail: ${customer.email}\nPhone: ${customer.phone}\nAddress: ${customer.address}`)
-    
+    const orderData = {
+      name: customer.name,
+      phone: customer.phone,
+      lessonIDs: bookingStore.bookedTutors.map(t => t.id),
+      space: 1
+    }
   
-    customer.name = ''
-    customer.email = ''
-    customer.phone = ''
-    customer.address = ''
+    try {
+      const res = await fetch("https://cst3144-cw1-backend.onrender.com/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderData)
+      })
+  
+      const orderResult = await res.json()
+      console.log("Order saved:", orderResult)
+  
+      for (const tutor of bookingStore.bookedTutors) {
+        await fetch(`https://cst3144-cw1-backend.onrender.com/api/lessons/${tutor.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ space: tutor.space - 1 })
+        })
+      }
+  
+      alert("Booking completed!")
+  
+      bookingStore.bookedTutors = []
+      customer.name = ""
+      customer.email = ""
+      customer.phone = ""
+      customer.address = ""
+  
+    } catch (err) {
+      console.error(err)
+    }
   }
   </script>
+  
   
   <style scoped>
   .bookings-page {
