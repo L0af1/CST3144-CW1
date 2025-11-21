@@ -24,26 +24,31 @@
   </template>
   
   <script setup>
-import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { bookingStore } from '../JS/bookingStore.js'
+import { ref, computed, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { bookingStore } from "../JS/bookingStore.js";
 
-const router = useRouter()
-const route = useRoute()
+const router = useRouter();
+const route = useRoute();
 
-const tutorId = Number(route.params.id)
-const tutor = bookingStore.tutors.find(t => t.id === tutorId)
+const tutorId = Number(route.params.id);
+const tutor = ref(null);
+
+onMounted(async () => {
+  await bookingStore.loadLessons();
+  tutor.value = bookingStore.tutors.find(t => t.id === tutorId);
+});
 
 const isBooked = computed(() => {
-  return bookingStore.bookedTutors.some(t => t.id === tutorId)
-})
+  return bookingStore.bookedTutors.some(t => t.id === tutorId);
+});
 
 function bookTutor() {
-  bookingStore.addBooking(tutor)
-  router.push('/cart')
+  if (!tutor.value) return;
+  bookingStore.addBooking(tutor.value);
+  router.push("/cart");
 }
 </script>
-  
   <style scoped>
   .profile-page {
     padding: 2rem;
