@@ -10,7 +10,7 @@ export const bookingStore = reactive({
       const res = await fetch("https://cst3144-cw1-backend.onrender.com/api/lessons")
       const data = await res.json()
 
-      // Replace everything inside tutors array (keep reactivity)
+      // Replace everything inside tutors array (keep reactivity) (This is pretty cool because it keeps the same array reference)
       this.tutors.splice(0, this.tutors.length, ...data)
 
     } catch (err) {

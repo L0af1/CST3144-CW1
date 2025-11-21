@@ -80,6 +80,10 @@
   import TutorCard from '../components/TutorCard.vue'
   import { bookingStore } from '../JS/bookingStore.js'
   
+  onMounted(() => {
+    bookingStore.loadLessons()
+  })
+  
   const tutors = computed(() => bookingStore.tutors)
   
   const filters = ref({
@@ -87,17 +91,6 @@
     maxPrice: 50,
     minRating: 0,
     location: ''
-  })
-  
-  onMounted(async () => {
-    try {
-      const res = await fetch('https://cst3144-cw1-backend.onrender.com/api/lessons')
-      const data = await res.json()
-  
-      bookingStore.tutors.splice(0, bookingStore.tutors.length, ...data)
-    } catch (err) {
-      console.error('FETCH ERROR:', err)
-    }
   })
   
   const filteredTutors = computed(() => {
@@ -120,7 +113,6 @@
   }
   </script>
   
-
   
   <style scoped>
   
