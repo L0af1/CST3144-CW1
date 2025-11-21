@@ -43,7 +43,7 @@
             <textarea id="address" v-model="customer.address" rows="3" required></textarea>
           </div>
   
-          <button type="submit" class="submit-btn">Confirm Booking</button>
+          <button type="submit" class="submit-btn" :disabled="!isValidName || !isValidPhone">Confirm Booking</button>
         </form>
       </div>
     </div>
@@ -81,6 +81,11 @@ async function submitBooking() {
     return
   }
 
+  if (!isValidName.value || !isValidPhone.value) {
+    alert("Name must be letters only and phone numbers only.")
+    return
+  }
+  
   const orderData = {
     name: customer.name,
     phone: customer.phone,
@@ -105,6 +110,8 @@ async function submitBooking() {
         body: JSON.stringify({ space: tutor.space - 1 })
       })
     }
+
+    await bookingStore.loadLessons()
 
     alert("Booking completed!")
 
