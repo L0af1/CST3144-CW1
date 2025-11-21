@@ -50,7 +50,7 @@
   </template>
   
   <script setup>
-import { reactive, computed } from "vue"
+import { reactive, computed, onMounted} from "vue"
 import { bookingStore } from "../JS/bookingStore.js"
 
 function formatDate(dateString) {
@@ -73,7 +73,11 @@ const customer = reactive({
 const isValidName = computed(() => /^[A-Za-z ]+$/.test(customer.name))
 const isValidPhone = computed(() => /^[0-9]+$/.test(customer.phone))
 
-const canCheckout = computed(() => isValidName.value && isValidPhone.value)
+//const canCheckout = computed(() => isValidName.value && isValidPhone.value)
+
+onMounted(() => {
+  bookingStore.loadLessons()
+})
 
 async function submitBooking() {
   if (!customer.name || !customer.email || !customer.phone || !customer.address) {
@@ -85,7 +89,7 @@ async function submitBooking() {
     alert("Name must be letters only and phone numbers only.")
     return
   }
-  
+
   const orderData = {
     name: customer.name,
     phone: customer.phone,
