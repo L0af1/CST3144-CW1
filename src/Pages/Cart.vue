@@ -50,72 +50,76 @@
   </template>
   
   <script setup>
-  import { reactive } from "vue"
-  import { bookingStore } from "../JS/bookingStore.js"
-  
-  function formatDate(dateString) {
-    return new Date(dateString).toLocaleDateString()
+import { reactive, computed } from "vue"
+import { bookingStore } from "../JS/bookingStore.js"
+
+function formatDate(dateString) {
+  return new Date(dateString).toLocaleDateString()
+}
+
+function cancelBooking(tutorId) {
+  if (confirm("Are you sure you want to cancel this booking?")) {
+    bookingStore.removeBooking(tutorId)
   }
-  
-  function cancelBooking(tutorId) {
-    if (confirm("Are you sure you want to cancel this booking?")) {
-      bookingStore.removeBooking(tutorId)
-    }
+}
+
+const customer = reactive({
+  name: "",
+  email: "",
+  phone: "",
+  address: ""
+})
+
+const isValidName = computed(() => /^[A-Za-z ]+$/.test(customer.name))
+const isValidPhone = computed(() => /^[0-9]+$/.test(customer.phone))
+
+const canCheckout = computed(() => isValidName.value && isValidPhone.value)
+
+async function submitBooking() {
+  if (!customer.name || !customer.email || !customer.phone || !customer.address) {
+    alert("Please fill out all fields before submitting.")
+    return
   }
-  
-  const customer = reactive({
-    name: "",
-    email: "",
-    phone: "",
-    address: ""
-  })
-  
-  async function submitBooking() {
-    if (!customer.name || !customer.email || !customer.phone || !customer.address) {
-      alert("Please fill out all fields before submitting.")
-      return
-    }
-  
-    const orderData = {
-      name: customer.name,
-      phone: customer.phone,
-      lessonIDs: bookingStore.bookedTutors.map(t => t.id),
-      space: 1
-    }
-  
-    try {
-      const res = await fetch("https://cst3144-cw1-backend.onrender.com/api/orders", {
-        method: "POST",
+
+  const orderData = {
+    name: customer.name,
+    phone: customer.phone,
+    lessonIDs: bookingStore.bookedTutors.map(t => t.id),
+    space: 1
+  }
+
+  try {
+    const res = await fetch("https://cst3144-cw1-backend.onrender.com/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderData)
+    })
+
+    const orderResult = await res.json()
+    console.log("Order saved:", orderResult)
+
+    for (const tutor of bookingStore.bookedTutors) {
+      await fetch(`https://cst3144-cw1-backend.onrender.com/api/lessons/${tutor.id}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(orderData)
+        body: JSON.stringify({ space: tutor.space - 1 })
       })
-  
-      const orderResult = await res.json()
-      console.log("Order saved:", orderResult)
-  
-      for (const tutor of bookingStore.bookedTutors) {
-        await fetch(`https://cst3144-cw1-backend.onrender.com/api/lessons/${tutor.id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ space: tutor.space - 1 })
-        })
-      }
-  
-      alert("Booking completed!")
-  
-      bookingStore.bookedTutors = []
-      customer.name = ""
-      customer.email = ""
-      customer.phone = ""
-      customer.address = ""
-  
-    } catch (err) {
-      console.error(err)
     }
+
+    alert("Booking completed!")
+
+    bookingStore.bookedTutors = []
+    customer.name = ""
+    customer.email = ""
+    customer.phone = ""
+    customer.address = ""
+
+  } catch (err) {
+    console.error(err)
   }
-  </script>
-  
-  
+}
+</script>
+
   <style scoped>
   .bookings-page {
     padding: 2rem;
