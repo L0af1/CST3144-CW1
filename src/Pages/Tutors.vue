@@ -15,6 +15,14 @@
             <option value="AP Physics">AP Physics</option>
           </select>
         </div>
+        <div class="filter-group">
+          <label>Search</label>
+          <input 
+          type="text" 
+          v-model="searchQuery" 
+          placeholder="Search by name, subject, or location..."
+          />
+      </div>
   
         <div class="filter-group">
           <label>Max Price: £{{ filters.maxPrice }}/hr</label>
@@ -92,6 +100,7 @@
     minRating: 0,
     location: ''
   })
+  const searchQuery = ref("")
   
   const filteredTutors = computed(() => {
     return tutors.value.filter(tutor => {
@@ -99,7 +108,15 @@
       const matchesPrice = tutor.price <= filters.value.maxPrice
       const matchesRating = tutor.rating >= filters.value.minRating
       const matchesLocation = !filters.value.location || tutor.location === filters.value.location
-      return matchesSubject && matchesPrice && matchesRating && matchesLocation
+
+      const q = searchQuery.value.toLowerCase()
+      const matchesSearch =
+      tutor.name.toLowerCase().includes(q) ||
+      tutor.subject.toLowerCase().includes(q) ||
+      tutor.location.toLowerCase().includes(q)
+
+
+      return matchesSubject && matchesPrice && matchesRating && matchesLocation && matchesSearch
     })
   })
   
@@ -115,107 +132,96 @@
   
   
   <style scoped>
-  
-  .tutors-container {
-    padding: 1.5rem;
-    background-color: #f9fafb;
-    min-height: 100vh;
-  }
-  
-  
-  .tutors-title {
-    font-size: 1.75rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-    color: #333;
-    text-align: center;
-  }
-  
-  
+.tutors-container {
+  padding: 1.5rem;
+  background: #f4f4fb;
+  min-height: 100vh;
+}
+
+
+.tutors-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4b3e9b;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.filters-section {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #d3d3ea;
+  box-shadow: 0 4px 10px rgba(90, 76, 168, 0.08);
+  margin-bottom: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.filter-group input[type="text"] {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+@media (min-width: 768px) {
   .filters-section {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 1.5rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr);
   }
-  
-  @media (min-width: 768px) {
-    .filters-section {
-      grid-template-columns: repeat(3, 1fr) auto;
-      align-items: end;
-    }
-  }
-  
-  .filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .filter-group label {
-    font-weight: 600;
-    color: #374151;
-    font-size: 0.9rem;
-  }
-  
-  .filter-group select {
-    padding: 0.5rem;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    cursor: pointer;
-  }
-  
-  .filter-group input[type="range"] {
-    cursor: pointer;
-  }
-  
-  .reset-btn {
-    padding: 0.5rem 1rem;
-    background-color: #6b7280;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    height: fit-content;
-  }
-  
-  .reset-btn:hover {
-    background-color: #4b5563;
-  }
-  
-  
-  .results-count {
-    text-align: center;
-    color: #6b7280;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-  }
-  
-  
+}
+
+.filter-group label {
+  color: #4b3e9b;
+  font-weight: 600;
+}
+
+.filter-group select,
+.filter-group input[type="range"] {
+  border: 1px solid #c5c5df;
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+.reset-btn {
+  background-color: #7a6fe3;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: 0.25s ease;
+}
+
+.reset-btn:hover {
+  background-color: #675ac7;
+}
+
+.results-count {
+  text-align: center;
+  color: #6c6c86;
+  margin-bottom: 1rem;
+}
+
+.tutors-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
   .tutors-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
   }
-  
-  @media (min-width: 768px) {
-    .tutors-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  
-  
-  .no-results {
-    text-align: center;
-    padding: 3rem;
-    background: white;
-    border-radius: 8px;
-    color: #6b7280;
-  }
-  </style>
+}
+
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  background: #ffffff;
+  border: 1px solid #d1d1eb;
+  border-radius: 12px;
+  color: #6c6c86;
+}
+</style>

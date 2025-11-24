@@ -15,31 +15,29 @@
   </div>
 </template>
 
-<style>
-.navbar {
+<style scoped>
+nav {
+  background: linear-gradient(90deg, #d6d6e8, #ececff);
+  padding: 1rem 1.5rem;
   display: flex;
-  gap: 1rem;
-  background-color: rgb(10, 232, 232);
-  padding: 10px 30px;
-  color: black;
-  width: 100%;
-  height: 70px;
-  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  border-bottom: 2px solid #c7c7dd;
 }
 
-.logo {
-  align-items: center;
-  color: blue;
-  
-}
-
-.navbar a {
+nav a {
   text-decoration: none;
-  color: black;
-  font-weight: bold;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #5a4ca8;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  transition: 0.25s ease;
 }
 
-.navbar a.router-link-active {
-  color: blue;
+nav a:hover {
+  background: #e5e1ff;
+  color: #463c91;
+  transform: translateY(-2px);
 }
 </style>

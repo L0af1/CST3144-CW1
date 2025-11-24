@@ -131,91 +131,96 @@ async function submitBooking() {
 }
 </script>
 
-  <style scoped>
-  .bookings-page {
-    padding: 2rem;
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #fafafa;
-    border-radius: 8px;
-  }
-  
-  .bookings-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-  
-  .booking-card {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  }
-  
-  .cancel-btn {
-    margin-top: 0.5rem;
-    background-color: #ef4444;
-    color: white;
-    border: none;
-    padding: 0.4rem 0.8rem;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .cancel-btn:hover {
-    background-color: #dc2626;
-  }
-  
-  
-  .customer-form {
-    background-color: #fff;
-    padding: 1.5rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  }
-  
-  .customer-form h2 {
-    margin-bottom: 0.5rem;
-  }
-  
-  .form-group {
-    margin-bottom: 1rem;
-  }
-  
-  label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-  }
-  
-  input, textarea {
-    width: 100%;
-    padding: 0.6rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1rem;
-  }
-  
-  .submit-btn {
-    background-color: #2563eb;
-    color: white;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .submit-btn:hover {
-    background-color: #1d4ed8;
-  }
-  
-  .empty-message {
-    text-align: center;
-    color: #666;
-    padding: 2rem 0;
-  }
-  </style>
+<style scoped>
+.bookings-page {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  background: #f5f5fc;
+  border-radius: 14px;
+}
+
+h1 {
+  text-align: center;
+  color: #4b3e9b;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.booking-card {
+  background: #ffffff;
+  border: 1px solid #cbcbe4;
+  padding: 1.2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(90, 76, 168, 0.08);
+}
+
+.cancel-btn {
+  margin-top: 0.5rem;
+  background-color: #d46c6c;
+  color: white;
+  padding: 0.45rem 0.8rem;
+  border: none;
+  border-radius: 8px;
+  transition: 0.25s ease;
+}
+
+.cancel-btn:hover {
+  background-color: #b55656;
+}
+
+.customer-form {
+  background: #ffffff;
+  border: 1px solid #cbcbe4;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-top: 2rem;
+  box-shadow: 0 4px 10px rgba(90, 76, 168, 0.08);
+}
+
+.customer-form h2 {
+  color: #4b3e9b;
+  margin-bottom: 0.75rem;
+}
+
+label {
+  font-weight: 600;
+  color: #4b3e9b;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid #c5c5df;
+  border-radius: 8px;
+  padding: 0.6rem;
+  margin-top: 0.3rem;
+}
+
+.submit-btn {
+  background-color: #7a6fe3;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: 0.25s ease;
+  margin-top: 1rem;
+}
+
+.submit-btn:hover {
+  background-color: #675ac7;
+}
+
+.empty-message {
+  text-align: center;
+  color: #6c6c86;
+  padding: 2rem 0;
+}
+</style>

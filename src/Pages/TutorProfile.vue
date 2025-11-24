@@ -49,31 +49,46 @@ function bookTutor() {
   router.push("/cart");
 }
 </script>
-  <style scoped>
-  .profile-page {
-    padding: 2rem;
-    max-width: 700px;
-    margin: 0 auto;
-    background-color: #f9fafb;
-    border-radius: 8px;
-  }
-  
-  .book-btn {
-    margin-top: 1rem;
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    padding: 0.6rem 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .book-btn:hover {
-    background-color: #2563eb;
-  }
-  
-  .book-btn:disabled {
-    background-color: #9ca3af;
-    cursor: not-allowed;
-  }
-  </style>
+<style scoped>
+.profile-page {
+  padding: 2rem;
+  max-width: 750px;
+  margin: 0 auto;
+  background: #fafaff;
+  border: 1px solid #d3d3ea;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(90, 76, 168, 0.1);
+}
+
+h1 {
+  color: #4b3e9b;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+p {
+  margin: 0.4rem 0;
+  color: #545468;
+}
+
+.book-btn {
+  margin-top: 1rem;
+  background-color: #7a6fe3;
+  color: white;
+  padding: 0.65rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.25s ease;
+}
+
+.book-btn:hover {
+  background-color: #675ac7;
+}
+
+.book-btn:disabled {
+  background-color: #bdb9df;
+  cursor: not-allowed;
+}
+</style>
