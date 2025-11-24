@@ -108,6 +108,10 @@ async function submitBooking() {
     console.log("Order saved:", orderResult)
 
     for (const tutor of bookingStore.bookedTutors) {
+      //check if tutor still has space or deducted space when booked
+      const fresh = bookingStore.tutors.find(t => t.id === booked.id)
+      if (!fresh) continue
+
       await fetch(`https://cst3144-cw1-backend.onrender.com/api/lessons/${tutor.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
