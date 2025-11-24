@@ -126,7 +126,7 @@
     return
   }
 
-  const res = await fetch(`https://cst3144-cw1-backend.onrender.com/api/search?q=${newValue}`)
+  const res = await fetch(`https://cst3144-cw1-backend.onrender.com/api/lessons/search?q=${newValue}`)
   const data = await res.json()
 
   bookingStore.tutors.splice(0, bookingStore.tutors.length, ...data)
