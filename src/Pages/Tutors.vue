@@ -84,7 +84,7 @@
   </template>
   
   <script setup>
-  import { ref, computed, onMounted } from 'vue'
+  import { ref, computed, onMounted, watch } from 'vue'
   import TutorCard from '../components/TutorCard.vue'
   import { bookingStore } from '../JS/bookingStore.js'
   
@@ -119,6 +119,18 @@
       return matchesSubject && matchesPrice && matchesRating && matchesLocation && matchesSearch
     })
   })
+
+  watch(searchQuery, async (newValue) => {
+  if (!newValue) {
+    bookingStore.loadLessons()
+    return
+  }
+
+  const res = await fetch(`https://cst3144-cw1-backend.onrender.com/api/search?q=${newValue}`)
+  const data = await res.json()
+
+  bookingStore.tutors.splice(0, bookingStore.tutors.length, ...data)
+})
   
   function resetFilters() {
     filters.value = {

@@ -50,90 +50,90 @@
   </template>
   
   <script setup>
-import { reactive, computed, onMounted} from "vue"
-import { bookingStore } from "../JS/bookingStore.js"
-
-function formatDate(dateString) {
-  return new Date(dateString).toLocaleDateString()
-}
-
-function cancelBooking(tutorId) {
-  if (confirm("Are you sure you want to cancel this booking?")) {
-    bookingStore.removeBooking(tutorId)
+  import { reactive, computed, onMounted } from "vue"
+  import { bookingStore } from "../JS/bookingStore.js"
+  
+  function formatDate(dateString) {
+    return new Date(dateString).toLocaleDateString()
   }
-}
-
-const customer = reactive({
-  name: "",
-  email: "",
-  phone: "",
-  address: ""
-})
-
-const isValidName = computed(() => /^[A-Za-z ]+$/.test(customer.name))
-const isValidPhone = computed(() => /^[0-9]+$/.test(customer.phone))
-
-//const canCheckout = computed(() => isValidName.value && isValidPhone.value)
-
-onMounted(() => {
-  bookingStore.loadLessons()
-})
-
-async function submitBooking() {
-  if (!customer.name || !customer.email || !customer.phone || !customer.address) {
-    alert("Please fill out all fields before submitting.")
-    return
-  }
-
-  if (!isValidName.value || !isValidPhone.value) {
-    alert("Name must be letters only and phone numbers only.")
-    return
-  }
-
-  const orderData = {
-    name: customer.name,
-    phone: customer.phone,
-    lessonIDs: bookingStore.bookedTutors.map(t => t.id),
-    space: 1
-  }
-
-  try {
-    const res = await fetch("https://cst3144-cw1-backend.onrender.com/api/orders", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(orderData)
-    })
-
-    const orderResult = await res.json()
-    console.log("Order saved:", orderResult)
-
-    for (const tutor of bookingStore.bookedTutors) {
-      //check if tutor still has space or deducted space when booked
-      const fresh = bookingStore.tutors.find(t => t.id === booked.id)
-      if (!fresh) continue
-
-      await fetch(`https://cst3144-cw1-backend.onrender.com/api/lessons/${tutor.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ space: tutor.space - 1 })
-      })
+  
+  function cancelBooking(tutorId) {
+    if (confirm("Are you sure you want to cancel this booking?")) {
+      bookingStore.removeBooking(tutorId)
     }
-
-    await bookingStore.loadLessons()
-
-    alert("Booking completed!")
-
-    bookingStore.bookedTutors = []
-    customer.name = ""
-    customer.email = ""
-    customer.phone = ""
-    customer.address = ""
-
-  } catch (err) {
-    console.error(err)
   }
-}
-</script>
+  
+  const customer = reactive({
+    name: "",
+    email: "",
+    phone: "",
+    address: ""
+  })
+  
+  const isValidName = computed(() => /^[A-Za-z ]+$/.test(customer.name))
+  const isValidPhone = computed(() => /^[0-9]+$/.test(customer.phone))
+  
+  onMounted(() => {
+    bookingStore.loadLessons()
+  })
+  
+  async function submitBooking() {
+    if (!customer.name || !customer.email || !customer.phone || !customer.address) {
+      alert("Please fill out all fields before submitting.")
+      return
+    }
+  
+    if (!isValidName.value || !isValidPhone.value) {
+      alert("Name must be letters only and phone numbers only.")
+      return
+    }
+  
+    if (bookingStore.bookedTutors.length === 0) {
+      alert("You have no tutors in your booking cart.")
+      return
+    }
+  
+    const orderData = {
+      name: customer.name,
+      phone: customer.phone,
+      lessonIDs: bookingStore.bookedTutors.map(t => t.id),
+      space: 1
+    }
+  
+    try {
+      const res = await fetch("https://cst3144-cw1-backend.onrender.com/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderData)
+      })
+  
+      const orderResult = await res.json()
+      console.log("Order saved:", orderResult)
+  
+      for (const tutor of bookingStore.bookedTutors) {
+        await fetch(`https://cst3144-cw1-backend.onrender.com/api/lessons/${tutor.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ space: tutor.space - 1 })
+        })
+      }
+  
+      await bookingStore.loadLessons()
+  
+      alert("Booking completed!")
+  
+      bookingStore.bookedTutors.splice(0, bookingStore.bookedTutors.length)
+  
+      customer.name = ""
+      customer.email = ""
+      customer.phone = ""
+      customer.address = ""
+  
+    } catch (err) {
+      console.error(err)
+    }
+  }
+  </script>
 
 <style scoped>
 .bookings-page {
