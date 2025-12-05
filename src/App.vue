@@ -1,17 +1,31 @@
+<script setup>
+import { computed } from "vue"
+import { bookingStore } from "./JS/bookingStore.js"
+
+const cartCount = computed(() => bookingStore.bookedTutors.length)
+</script>
+
 <template>
   <div>
     <nav class="navbar">
       <h2 class="logo">Tutor Connect</h2>
-      <ul class ="nav-links">
+      <ul class="nav-links">
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/tutors">Tutors</router-link></li>
         <li><router-link to="/login">Login</router-link></li>
         <li><router-link to="/signup">Signup</router-link></li>
-        <li><router-link to="/cart">Bookings</router-link></li>
+        <li>
+          <router-link to="/cart" class="cart-link">
+            Bookings
+            <span v-if="cartCount > 0" class="cart-badge">
+              {{ cartCount }}
+            </span>
+          </router-link>
+        </li>
       </ul>
     </nav>
 
-    <router-view></router-view>
+    <router-view />
   </div>
 </template>
 
